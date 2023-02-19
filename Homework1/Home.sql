@@ -1,0 +1,85 @@
+create database library;
+
+use library;
+
+create table readers (
+id int,
+first_name varchar(255),
+surname varchar (255),
+age int,
+is_active boolean,
+amount_of_books int, 
+primary key(id)
+);
+
+create table reading_room_staff(
+id int,
+first_name varchar(255),
+surname varchar (255),
+age int,
+is_active boolean,
+salary int,
+number_of_worker int,
+primary key(id)
+);
+
+create table service_staff(
+id int,
+first_name varchar(255),
+surname varchar (255),
+age int,
+is_active boolean,
+salary int,
+primary key(id)
+);
+
+insert into readers values (101,'Oleh', 'Honcharov', 16, true, 3),
+(102,'Olha', 'Honorova', 35, false, 0),
+(103, 'Max', 'Topolev', 80, true, 20),
+(104, 'Taras', 'Shevchenko', 41, true, 55),
+(105,'Olesya', 'Hayda', 21, false, 1);
+
+insert into reading_room_staff values (201, 'Laszek', 'Lech', 30, true, 10000, 1),
+(202, 'Marya', 'Petrovna', 45, false, 7000,  1),
+(203, 'Danuta', 'Szlachetna', 25, true, 3000,  1),
+(204, 'Taras', 'Bulba', 36, true, 8000, 1),
+(205, 'Gustav', 'Doo', 19, false, 9000, 1);
+
+insert into service_staff values (301, 'Andrew', 'Tunow', 20, false, 2000),
+(302, 'Genek', 'Skon', 50, true, 5000),
+(303, 'Krzysztof', 'Grabowski', 33, true, 4000),
+(304, 'Kuba', 'Deputat', 42, true, 6000),
+(305, 'Vitalina', 'Ogajko', 18, true, 1500);
+
+select * from readers;
+select * from reading_room_staff;
+select * from service_staff;
+
+select * from readers
+where amount_of_books > 0 and is_active = false;
+
+select first_name as The_name, surname as Surname, amount_of_books as Books_credit, is_active as Is_Active from readers
+where amount_of_books > 0 and is_active = false;
+
+select * from reading_room_staff
+where salary > 4000
+UNION
+select *, " " from service_staff
+where salary > 4000
+order by salary;
+
+select id as ID_number, first_name as The_name, surname as Surname, salary as Salary, "reading room" as Position from reading_room_staff
+where salary > 4000
+UNION
+select id, first_name, surname, salary, "service" from service_staff
+where salary > 4000
+order by salary;
+
+select concat(first_name, " ", surname) as Full_name, age as Age, 0 as Salary, amount_of_books as Books_credit,0 as Room_staff, "Reader" as Category from readers
+where is_active = true
+UNION
+select concat(first_name, " ", surname), age, salary, 0, number_of_worker, "Employeer" from reading_room_staff
+where is_active = true
+UNION
+select concat(first_name, " ", surname), age, salary, 0, 0, "Staff" from service_staff
+where is_active = true;
