@@ -1,0 +1,89 @@
+use shop_new;
+
+select * from customers;
+select * from sellers;
+select * from orders;
+
+
+/*
+1. From the lesson
+*/
+select t2.SNAME SALLER_NAME, t1.SNAME BOSS_NAME
+from sellers t1
+right join sellers t2
+on t1.SELL_ID = t2.BOSS_ID; 
+
+select t1.SNAME, t2.SNAME as BOSS_NAME
+from sellers t1
+left join sellers t2
+on t1.BOSS_ID = t2.SELL_ID; 
+
+/*
+2
+*/
+
+select t1.CNAME Customer_name, t2.AMT AMOUNT
+from CUSTOMERS t1
+inner join ORDERS t2
+on t1.CUST_ID = t2.CUST_ID
+where t2.AMT>1000;
+
+select t1.CNAME Customer_name, t2.AMT AMOUNT
+from CUSTOMERS t1
+inner join ORDERS t2
+on t1.CUST_ID = t2.CUST_ID and t2.AMT>1000;
+
+
+/*
+3
+*/
+
+select t1.CNAME Customer_name, t3.SNAME Seller_name 
+from CUSTOMERS t1
+inner join ORDERS t2
+on t1.CUST_ID = t2.CUST_ID
+inner join SELLERS t3
+on t2.SELL_ID = t3.SELL_ID and t1.CITY != t3.CITY;
+
+/*
+4. Homework tasks
+*/
+
+select t1.SNAME Seller_name, t2.COMM-t1.COMM as Difference
+from sellers t1
+left join sellers t2
+on t1.BOSS_ID = t2.SELL_ID; 
+
+/*
+5. Те, кто сделал заказ
+*/
+
+select t1.CNAME Customer_name, t3.SNAME Seller_name, t1.CITY
+from CUSTOMERS t1
+inner join ORDERS t2
+on t1.CUST_ID = t2.CUST_ID
+inner join SELLERS t3
+on t2.SELL_ID = t3.SELL_ID and t1.CITY = t3.CITY;
+/*
+5. Просто все покупатели и продавцы, которые, в теории, могут их обслужить, не зависит от того, куплено ли уже что-то
+*/
+
+select t1.CNAME Customer_name, t2.SNAME Seller_name, t1.CITY
+from CUSTOMERS t1
+inner join SELLERS t2
+on t1.CITY = t2.CITY;
+
+
+/*
+6
+*/
+
+select t1.CNAME Customer_name, t2.ORDER_ID 
+from CUSTOMERS t1
+left join ORDERS t2
+on t1.CUST_ID = t2.CUST_ID
+union
+select t4.CNAME, t3.ORDER_ID 
+from CUSTOMERS t4
+right join ORDERS t3
+on t4.CUST_ID = t3.CUST_ID;
