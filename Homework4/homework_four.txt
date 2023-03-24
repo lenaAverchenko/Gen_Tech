@@ -1,0 +1,130 @@
+/*
+8. Homework
+*/
+
+select * from locations;
+select * from jobs;
+select * from departments;
+select * from employees;
+select * from countries;
+select * from regions;
+
+select avg(salary) avg_salary_from_90_dept from employees 
+where department_id = 90;
+
+/*
+9. Homework
+*/
+        
+select max(salary) max_salary_from_70_and_80_depts from employees 
+where department_id in (70,80);    
+
+ /*
+10. Homework
+*/  
+        
+select count(*) amount_of_employees from employees 
+where department_id = 100 and salary > 5000; 
+
+ /*
+11. Homework
+*/ 
+
+select count(*) amount_of_employees from employees 
+where department_id = 60 and salary > (select avg(salary) from employees); 
+
+
+
+
+
+From Classwork
+
+use hr;
+
+select * from employees;
+
+/*
+1.
+*/
+
+select min(salary) min_salary from employees;
+select max(salary) max_salary from employees;
+
+/*
+2.
+*/
+select count(employee_id)  amount_of_employees from employees;
+
+/*
+3.
+*/
+select avg(salary)  average_salary from employees;
+
+/*
+4.
+*/
+select avg(salary)  average_salary from employees;
+ 
+ 
+ select first_name, last_name, employee_id from employees
+where salary = (select max(salary) from employees);
+
+
+select first_name, last_name, employee_id from employees
+where salary = (select max(salary) from employees) or
+salary = (select min(salary) from employees);
+
+/*
+5.
+*/
+
+select * from employees
+where salary < (select avg(salary) from employees);
+
+select first_name, last_name, employee_id, (select avg(salary) from employees) from employees
+where salary < (select avg(salary) from employees);
+
+select t1.first_name, t1.last_name, t1.employee_id, t1.salary, t2.avg_salary from employees t1
+left join (select avg(salary) avg_salary from employees) t2
+on 1=1
+where salary < (select avg(salary) from employees);
+
+select * from locations;
+select * from jobs;
+select * from departments;
+select * from employees;
+select * from countries;
+select * from regions;
+show tables;
+
+/*
+6.
+*/
+
+select  count(*) number_of_depts from departments ;
+
+
+select  distinct count(*) number_of_depts from departments;
+
+/*
+7.
+*/
+
+select  count(*) number_of_depts from departments;
+
+
+
+
+select count(*) as number_of_depts
+from departments t1
+left join employees t2
+on t1.department_id = t2.department_id
+where t2.last_name is null; 
+
+
+select count(*) from departments 
+where department_id not in (
+		select department_id 
+        from employees 
+        where department_id is not null);
+  
